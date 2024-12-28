@@ -1,0 +1,17 @@
+--#if postgresql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+--#endif
+
+
+    CREATE TABLE RelatorioGastos(
+
+        id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+        id_user UUID,
+        total_gasto DECIMAL(15, 4),
+        resto_orcamento DECIMAL(15, 4),
+        gastos  JSON NOT NULL,
+        criacao TIMESTAMP NOT NULL,
+
+        CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES user (id) ON DELETE CASCADE
+
+    );

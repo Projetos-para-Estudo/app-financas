@@ -1,0 +1,15 @@
+--#if postgresql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+--#endif
+
+    CREATE TABLE cadastro (
+
+        id UUID DEFAULT gen_random_uuid() PRIMARY_KEY,
+        id_user UUID,
+        nome VARCHAR(100) NOT NULL,
+        email VARCHAR(150) NOT NULL,
+        telefone VARCHAR(15) NOT NULL,
+
+        CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users (id)
+
+    );

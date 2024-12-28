@@ -1,0 +1,12 @@
+--#if postgresql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+--#endif
+
+    CREATE TABLE users(
+
+        id UUID DEFAULT gen_random_uuid() PRIMARY_KEY,
+        username varchar(50) NOT NULL,
+        hash_password varchar(255) NOT NULL,
+        date_creation TIMESTAMP NOT NULL,
+        last_update TIMESTAMP NOT NULL
+    );
