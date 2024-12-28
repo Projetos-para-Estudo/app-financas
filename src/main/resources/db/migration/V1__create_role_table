@@ -1,0 +1,11 @@
+--#if postgresql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+--#endif
+
+
+    CREATE TABLE ROLE(
+
+        id SERIAL PRIMARY KEY,
+        name VARCHAR(50) NOT NULL UNIQUE
+
+    );
