@@ -10,7 +10,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
         total_gasto DECIMAL(15, 4),
         resto_orcamento DECIMAL(15, 4),
         gastos  JSON NOT NULL,
-        criacao TIMESTAMP NOT NULL,
+        criacao TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
         CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES user (id) ON DELETE CASCADE
 
