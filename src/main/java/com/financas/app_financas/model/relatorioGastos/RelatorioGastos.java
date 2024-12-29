@@ -2,6 +2,7 @@ package com.financas.app_financas.model.relatorioGastos;
 
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.financas.app_financas.jpa.JsonNodeConverter;
 import com.financas.app_financas.model.users.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,6 +35,7 @@ public class RelatorioGastos {
     private BigDecimal resto_orcamento;
 
     @Column(nullable = false, columnDefinition = "json")
+    @Convert(converter = JsonNodeConverter.class)
     private JsonNode gastos;
 
     @Column(nullable = false, name = "criacao")
