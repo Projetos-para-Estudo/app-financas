@@ -5,7 +5,7 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
     CREATE TABLE cadastro (
 
         id UUID DEFAULT gen_random_uuid() PRIMARY_KEY,
-        id_user UUID,
+        id_user UUID UNIQUE,
         nome VARCHAR(100) NOT NULL,
         email VARCHAR(150) NOT NULL,
         telefone VARCHAR(15) NOT NULL,
