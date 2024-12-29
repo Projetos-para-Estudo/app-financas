@@ -10,6 +10,6 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
         email VARCHAR(150) NOT NULL,
         telefone VARCHAR(15) NOT NULL,
 
-        CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES users (id)
+        CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES user (id)
 
     );
