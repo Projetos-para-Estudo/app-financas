@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import org.hibernate.annotations.CreationTimestamp;
 
 
 import java.math.BigDecimal;
@@ -33,8 +33,9 @@ public class Orcamento {
     private BigDecimal value;
 
 
-    @Column(nullable = false, name = "date_creation")
-    private LocalDate dateCreation;
+    @CreationTimestamp
+    @Column(nullable = false, name = "date_creation", updatable = false)
+    private LocalDateTime dateCreation;
 
     @Column(nullable = false, name = "start_date")
     private LocalDate startDate;
@@ -48,8 +49,4 @@ public class Orcamento {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @PrePersist
-    protected void onCreate(){
-        this.dateCreation = LocalDate.now();
-    }
 }

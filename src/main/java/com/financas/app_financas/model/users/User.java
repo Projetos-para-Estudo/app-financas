@@ -6,6 +6,8 @@ import com.financas.app_financas.model.role.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 
 import java.time.LocalDateTime;
@@ -28,26 +30,17 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @Column(nullable = false)
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
     private LocalDateTime date_creation;
 
+    @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime last_update;
 
     @ManyToOne
     @JoinColumn(name =  "role_id", nullable = false, foreignKey = @ForeignKey(name = "fk_role_id"))
     private Role role;
-
-    @PrePersist
-    protected void onCreate(){
-        this.date_creation = LocalDateTime.now();
-        this.last_update = LocalDateTime.now();
-    }
-
-    @PreUpdate
-    protected void onUpdate(){
-        this.last_update = LocalDateTime.now();
-    }
 
 
 }
