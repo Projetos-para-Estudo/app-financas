@@ -5,9 +5,16 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE TABLE gasto (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     id_user UUID NOT NULL,
+
     category VARCHAR(100) NOT NULL,
     description TEXT NOT NULL,
+    valor_total DECIMAL(10, 2) NOT NULL,
+    parcelado BOOLEAN NOT NULL DEFAULT FALSE,
+    forma_pagamento VARCHAR(50) NOT NULL,
+
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT fk_user FOREIGN KEY (id_user) REFERENCES user (id) ON DELETE CASCADE
+
+    CONSTRAINT fk_user
+      FOREIGN KEY (id_user) REFERENCES "user" (id) ON DELETE CASCADE
 );
