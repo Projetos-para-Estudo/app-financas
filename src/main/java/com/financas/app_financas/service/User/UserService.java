@@ -30,4 +30,6 @@ public class UserService {
     public Optional<User> buscarPorUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+
 }

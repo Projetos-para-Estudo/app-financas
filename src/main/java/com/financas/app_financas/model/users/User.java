@@ -34,6 +34,20 @@ public class User {
     @JoinColumn(name = "role_id", nullable = false, foreignKey = @ForeignKey(name = "fk_role_id"))
     private Role role;
 
+
+
+    public User() {
+    }
+
+    public User(String username, UUID id, String password, LocalDateTime date_creation, LocalDateTime last_update, Role role) {
+        this.username = username;
+        this.id = id;
+        this.password = password;
+        this.date_creation = date_creation;
+        this.last_update = last_update;
+        this.role = role;
+    }
+
     // Getters e Setters
     public UUID getId() {
         return id;
