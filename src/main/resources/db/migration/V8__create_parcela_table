@@ -1,0 +1,21 @@
+--#if postgresql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+--#endif
+
+CREATE TABLE parcela (
+    id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+    id_gasto UUID NOT NULL,
+
+    numero_parcela INT NOT NULL,
+    valor_parcela DECIMAL(10, 2) NOT NULL,
+    taxa_juros DECIMAL(5, 2),
+    data_vencimento DATE NOT NULL,
+    paga BOOLEAN NOT NULL DEFAULT FALSE,
+
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    CONSTRAINT fk_gasto
+      FOREIGN KEY (id_gasto) REFERENCES gasto (id)
+      ON DELETE CASCADE
+);
