@@ -1,6 +1,11 @@
 package com.financas.app_financas.service;
 
+import com.financas.app_financas.dto.RegisterDTO;
+import com.financas.app_financas.model.cadastro.Cadastro;
+import com.financas.app_financas.model.role.Role;
 import com.financas.app_financas.model.users.User;
+import com.financas.app_financas.repository.cadastro.CadastroRepository;
+import com.financas.app_financas.repository.role.RoleRepository;
 import com.financas.app_financas.repository.user.UserRepository;
 import com.financas.app_financas.service.User.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -22,6 +27,12 @@ public class UserServiceTest {
     private UserRepository userRepository;
 
     @Mock
+    private RoleRepository roleRepository;
+
+    @Mock
+    private CadastroRepository cadastroRepository;
+
+    @Mock
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
@@ -30,19 +41,30 @@ public class UserServiceTest {
     @Test
     public void deveCadastrarUsuarioQuandoUsernameNaoExiste() {
         // Cenário
-        User user = new User();
-        user.setUsername("novoUsuario");
-        user.setPassword("senha123");
+        RegisterDTO registerDTO = new RegisterDTO();
+        registerDTO.setUsername("novoUsuario");
+        registerDTO.setPassword("senha123");
+        registerDTO.setRoleName("USER");
+        registerDTO.setNome("Nome Completo");
+        registerDTO.setEmail("email@teste.com");
+        registerDTO.setTelefone("123456789");
+
+        Role role = new Role(UUID.randomUUID(), "USER");
 
         Mockito.when(userRepository.existsByUsername("novoUsuario")).thenReturn(false);
+        Mockito.when(roleRepository.findByName("USER")).thenReturn(Optional.of(role));
         Mockito.when(passwordEncoder.encode("senha123")).thenReturn("senhaCriptografada");
         Mockito.when(userRepository.save(Mockito.any(User.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        Mockito.when(cadastroRepository.save(Mockito.any(Cadastro.class))).thenAnswer(invocation -> invocation.getArgument(0));
 
-        User resultado = userService.cadastrarUsuario(user);
+        // Ação
+        User resultado = userService.cadastrarUsuario(registerDTO);
 
+        // Verificação
         Assertions.assertNotNull(resultado);
         Assertions.assertEquals("novoUsuario", resultado.getUsername());
         Assertions.assertEquals("senhaCriptografada", resultado.getPassword());
-        Mockito.verify(userRepository, Mockito.times(1)).save(user);
+        Mockito.verify(userRepository, Mockito.times(1)).save(Mockito.any(User.class));
+        Mockito.verify(cadastroRepository, Mockito.times(1)).save(Mockito.any(Cadastro.class));
     }
 }
