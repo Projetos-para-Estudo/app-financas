@@ -1,14 +1,11 @@
 package com.financas.app_financas.service.Auth;
 
-
 import com.financas.app_financas.model.users.User;
 import com.financas.app_financas.repository.user.UserRepository;
 import com.financas.app_financas.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -19,6 +16,8 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private JwtUtil jwtUtil; // Injeta o JwtUtil como dependência
 
     /**
      * Realiza o login do usuário e retorna o token JWT se as credenciais forem válidas.
@@ -40,7 +39,7 @@ public class AuthService {
             throw new IllegalArgumentException("Senha inválida");
         }
 
-        // Gera o token JWT
-        return JwtUtil.generateToken(username);
+        // Gera o token JWT usando a instância do JwtUtil
+        return jwtUtil.generateToken(username);
     }
 }

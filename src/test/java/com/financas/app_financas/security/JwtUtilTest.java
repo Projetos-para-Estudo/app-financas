@@ -1,18 +1,21 @@
 package com.financas.app_financas.security;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.springframework.boot.test.context.SpringBootTest;
 
-public class JwtTokenTest {
+@SpringBootTest
+public class JwtUtilTest {
+
+    @InjectMocks
+    private JwtUtil jwtUtil;
 
     @Test
     public void deveGerarToken() {
-
-        String token = JwtUtil.generateToken("Usuario_Teste");
+        String token = jwtUtil.generateToken("Usuario_Teste");
 
         Assertions.assertNotNull(token);
         System.out.println("Token: " + token);
-
     }
 }
