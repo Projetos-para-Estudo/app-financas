@@ -9,6 +9,7 @@ import javax.crypto.SecretKey;
 import java.util.Base64;
 import java.util.Date;
 
+import nonapi.io.github.classgraph.json.JSONUtils;
 import org.springframework.stereotype.Component;
 
 @Component // Torna a classe um bean gerenciável pelo Spring
@@ -36,4 +37,5 @@ public class JwtUtil {
                 .getBody()
                 .getSubject();
     }
+
 }

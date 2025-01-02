@@ -43,8 +43,9 @@ public class GastoService {
         gasto.setFormaPagamento(gastoDTO.getFormaPagamento());
         gasto = gastoRepository.save(gasto);
 
-        if (gasto.isParcelado() && gastoDTO.getNumeroParcelas()
-                != null && gastoDTO.getNumeroParcelas() > 1) {
+        if (gasto.isParcelado() &&
+                gastoDTO.getNumeroParcelas() != null &&
+                gastoDTO.getNumeroParcelas() > 1) {
             List<Parcela> parcelas = gerarParcelas(gasto, gastoDTO);
             parcelaRepository.saveAll(parcelas);
         }
