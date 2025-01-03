@@ -41,23 +41,25 @@ public class OrcamentoService {
     }
 
 
-    public void deletarOrcamento(UUID orcamentoId) {
-        Orcamento orcamento = orcamentoRepository.findById(orcamentoId)
-                .orElseThrow(()-> new IllegalArgumentException("Orçamento não encontrado"));
+    public void deletarOrcamento(UUID userId, UUID orcamentoId) {
+        Orcamento orcamento = orcamentoRepository.findByIdAndIdUser(orcamentoId, userId)
+                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado ou não pertence ao usuário."));
         orcamentoRepository.delete(orcamento);
     }
 
-    public Orcamento atualizarOrcamento(UUID orcamentoId, OrcamentoDTO orcamentoDTO){
-        Orcamento orcamento = orcamentoRepository.findById(orcamentoId)
-                .orElseThrow(()-> new IllegalArgumentException("Orçamento não encontrado"));
 
-            orcamento.setValue(orcamentoDTO.getValue());
-            orcamento.setCategory(orcamentoDTO.getCategory());
-            orcamento.setDescription(orcamentoDTO.getDescription());
-            orcamento.setStartDate(orcamentoDTO.getStartDate());
-            orcamento.setEndDate(orcamentoDTO.getEndDate());
 
-            return orcamentoRepository.save(orcamento);
+    public Orcamento atualizarOrcamento(UUID userId, UUID orcamentoId, OrcamentoDTO orcamentoDTO) {
+        Orcamento orcamento = orcamentoRepository.findByIdAndIdUser(orcamentoId, userId)
+                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado ou não pertence ao usuário."));
+
+        orcamento.setValue(orcamentoDTO.getValue());
+        orcamento.setCategory(orcamentoDTO.getCategory());
+        orcamento.setDescription(orcamentoDTO.getDescription());
+        orcamento.setStartDate(orcamentoDTO.getStartDate());
+        orcamento.setEndDate(orcamentoDTO.getEndDate());
+
+        return orcamentoRepository.save(orcamento);
     }
 
 

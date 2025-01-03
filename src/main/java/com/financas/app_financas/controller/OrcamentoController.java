@@ -1,6 +1,5 @@
 package com.financas.app_financas.controller;
 
-
 import com.financas.app_financas.dto.OrcamentoDTO;
 import com.financas.app_financas.dto.OrcamentoResponseDTO;
 import com.financas.app_financas.model.orcamento.Orcamento;
@@ -35,6 +34,25 @@ public class OrcamentoController {
                 .toList();
         return ResponseEntity.ok(response);
     }
+
+    @PutMapping("/{userId}/atualizar/{orcamentoId}")
+    public ResponseEntity<OrcamentoResponseDTO> atualizarOrcamento(
+            @PathVariable UUID userId,
+            @PathVariable UUID orcamentoId,
+            @RequestBody OrcamentoDTO orcamentoDTO) {
+        Orcamento orcamentoAtualizado = orcamentoService.atualizarOrcamento(userId, orcamentoId, orcamentoDTO);
+        return ResponseEntity.ok(mapToResponseDTO(orcamentoAtualizado));
+    }
+
+
+    @DeleteMapping("/{userId}/deletar/{orcamentoId}")
+    public ResponseEntity<Void> deletarOrcamento(
+            @PathVariable UUID userId,
+            @PathVariable UUID orcamentoId) {
+        orcamentoService.deletarOrcamento(userId, orcamentoId);
+        return ResponseEntity.noContent().build(); // Retorna 204 No Content
+    }
+
 
     private OrcamentoResponseDTO mapToResponseDTO(Orcamento orcamento) {
         OrcamentoResponseDTO dto = new OrcamentoResponseDTO();
