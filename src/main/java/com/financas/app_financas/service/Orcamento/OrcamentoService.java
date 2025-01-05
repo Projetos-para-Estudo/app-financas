@@ -40,18 +40,24 @@ public class OrcamentoService {
         return orcamentoRepository.findByUserId(userId);
     }
 
-
     public void deletarOrcamento(UUID userId, UUID orcamentoId) {
-        Orcamento orcamento = orcamentoRepository.findByIdAndIdUser(orcamentoId, userId)
-                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado ou não pertence ao usuário."));
+        Orcamento orcamento = orcamentoRepository.findById(orcamentoId)
+                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado"));
+
+        if (!orcamento.getUser().getId().equals(userId)) {
+            throw new SecurityException("Você não tem permissão para deletar este orçamento.");
+        }
+
         orcamentoRepository.delete(orcamento);
     }
 
-
-
     public Orcamento atualizarOrcamento(UUID userId, UUID orcamentoId, OrcamentoDTO orcamentoDTO) {
-        Orcamento orcamento = orcamentoRepository.findByIdAndIdUser(orcamentoId, userId)
-                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado ou não pertence ao usuário."));
+        Orcamento orcamento = orcamentoRepository.findById(orcamentoId)
+                .orElseThrow(() -> new IllegalArgumentException("Orçamento não encontrado"));
+
+        if (!orcamento.getUser().getId().equals(userId)) {
+            throw new SecurityException("Você não tem permissão para atualizar este orçamento.");
+        }
 
         orcamento.setValue(orcamentoDTO.getValue());
         orcamento.setCategory(orcamentoDTO.getCategory());
@@ -61,6 +67,8 @@ public class OrcamentoService {
 
         return orcamentoRepository.save(orcamento);
     }
+
+
 
 
 
