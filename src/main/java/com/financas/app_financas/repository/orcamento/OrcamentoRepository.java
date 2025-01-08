@@ -36,7 +36,7 @@ public interface OrcamentoRepository extends JpaRepository<Orcamento, UUID> {
 
 
 
-    Optional<Orcamento> findByIdAndIdUser(UUID orcamentoId, UUID idUser);
+    Optional<Orcamento> findByIdAndUser_Id(UUID orcamentoId, UUID userId);
 
     Optional<Orcamento> findTopByUserIdOrderByDateCreationDesc(UUID userId);
 }
